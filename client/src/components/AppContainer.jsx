@@ -29,6 +29,7 @@ class AppContainer extends Component {
         this.loadData();
     }
 
+    // get all documents from api endpoint
     loadData = async() => {
         const response = await fetch('/api');
         const json = await response.json();
@@ -48,9 +49,28 @@ class AppContainer extends Component {
     }
 
     // handle form submission
-    handleSubmission = (event) => {
+    handleSubmission = async (event) => {
         event.preventDefault();
-        console.table(this.state);
+        // console.table(this.state);
+
+        // object for form submission
+        let formSubmission = {
+            name : this.state.name,
+            gender : this.state.gender,
+            age : this.state.age
+        }
+        
+        // add document via api endpoint
+        let response = await fetch('/api', {
+            method : "POST",
+            headers : {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(formSubmission)
+        });
+        let json = await response.json();
+        console.table(json);
     }
 
     // display title, form, and all characters
