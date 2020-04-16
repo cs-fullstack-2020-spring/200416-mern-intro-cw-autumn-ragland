@@ -15,17 +15,25 @@ class AppContainer extends Component {
 
     // load mock data into array
     componentDidMount = () => {
-        this.state.characterArray.push({
-            name : "Autumn",
-            gender : "Female",
-            age : 21,
-        });
-        this.state.characterArray.push({
-            name : "Adam",
-            gender : "Male",
-            age : 22,
-        });
-        this.setState({characterArray : this.state.characterArray});
+        // this.state.characterArray.push({
+        //     name : "Autumn",
+        //     gender : "Female",
+        //     age : 21,
+        // });
+        // this.state.characterArray.push({
+        //     name : "Adam",
+        //     gender : "Male",
+        //     age : 22,
+        // });
+        // this.setState({characterArray : this.state.characterArray});
+        this.loadData();
+    }
+
+    loadData = async() => {
+        const response = await fetch('/api');
+        const json = await response.json();
+        console.table(json);
+        this.setState({characterArray : json});
     }
 
     // handle form input
@@ -69,7 +77,7 @@ class AppContainer extends Component {
                     {
                         this.state.characterArray.map((character, index) => {
                             return(
-                                <div>
+                                <div key = {index}>
                                     {character.name} <hr/>
                                     {character.gender} <hr/>
                                     {character.age} <hr/>
